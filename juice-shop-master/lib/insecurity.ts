@@ -196,7 +196,11 @@ export const updateAuthenticatedUsers = () => (req: Request, res: Response, next
       if (err === null) {
         if (authenticatedUsers.get(token) === undefined) {
           authenticatedUsers.put(token, decoded)
-          res.cookie('token', token)
+          res.cookie('token', token, {
+            httpOnly: true,
+            secure: true,
+            sameSite: 'Strict'
+          })
         }
       }
     })
